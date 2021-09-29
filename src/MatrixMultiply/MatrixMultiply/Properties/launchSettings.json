@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MatrixMultiply": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\first.txt D:\\second.txt D:\\result.txt"
+    }
+  }
+}

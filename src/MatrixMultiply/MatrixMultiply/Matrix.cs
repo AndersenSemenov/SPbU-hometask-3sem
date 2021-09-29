@@ -9,11 +9,11 @@ namespace MatrixMultiply
     {
         public int amountOfColumns { get; private set; }
         public int amountOfRows { get; private set; }
-        public int[,] matrix { get; private set; } //mb value
+        public int[,] value { get; private set; }
 
         public Matrix(int[,] matrix)
         {
-            this.matrix = matrix;
+            this.value = matrix;
             this.amountOfColumns = matrix.GetLength(0);
             this.amountOfRows = matrix.GetLength(1);
         }
@@ -31,7 +31,7 @@ namespace MatrixMultiply
 
             this.amountOfColumns = n;
             this.amountOfRows = m;
-            this.matrix = matrix;
+            this.value = matrix;
         }
 
         public Matrix(int n, int m, int range)
@@ -49,7 +49,7 @@ namespace MatrixMultiply
 
             this.amountOfColumns = n;
             this.amountOfRows = m;
-            this.matrix = matrix;
+            this.value = matrix;
         }
 
         public Matrix ParallelMultiply(Matrix matr)
@@ -65,25 +65,37 @@ namespace MatrixMultiply
 
             for (var t = 0; t < threads.Length; t++)
             {
-                var currentI = chunkSize * (t + 1) / result.amountOfRows;
-                var currentJ = chunkSize * (t + 1) % result.amountOfRows;
+                var currentI = chunkSize * t / result.amountOfRows;
+                var currentJ = chunkSize * t % result.amountOfRows;
+                var count = 0;
+
                 threads[t] = new Thread(() =>
                 {
-                    var count = 0;
                     for (var i = currentI; i < result.amountOfColumns && count < chunkSize; i++)
                     {
                         for (var j = currentJ; j < result.amountOfRows && count < chunkSize; j++)
                         {
                             for (var k = 0; k < this.amountOfRows; k++)
                             {
-                                result.matrix[i, j] += this.matrix[i, k] * matr.matrix[k, j];
-                                count++;
+                                result.value[i, j] += this.value[i, k] * matr.value[k, j];
                             }
+                            count++;
                         }
                         currentJ = 0;
                     }
                 });
             }
+
+            foreach (var thread in threads)
+            {
+                thread.Start();
+            }
+
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+
             return result;
         }
 
@@ -105,14 +117,14 @@ namespace MatrixMultiply
                 {
                     for (var k = 0; k < this.amountOfRows; k++)
                     {
-                        result.matrix[i, j] += this.matrix[i, k] * matr.matrix[k, j]; // хуета с matrix.matrix
+                        result.value[i, j] += this.value[i, k] * matr.value[k, j];
                     }
                 }
             }
             return result;
         }
 
-        public bool AreEqual(Matrix matr)
+        public bool IsEqual(Matrix matr)
         {
             if (this.amountOfColumns != matr.amountOfColumns || this.amountOfRows != matr.amountOfRows)
             {
@@ -122,7 +134,7 @@ namespace MatrixMultiply
             {
                 for (var j = 0;  j < this.amountOfRows; j++)
                 {
-                    if (this.matrix[i, j] != matr.matrix[i, j])
+                    if (this.value[i, j] != matr.value[i, j])
                     {
                         return false;
                     }
@@ -130,10 +142,5 @@ namespace MatrixMultiply
             }
             return true;
         }
-
-        //public void WriteToFile()
-        //{
-        //    FileOperations.WriteMatrix();
-        //}
     }
 }
