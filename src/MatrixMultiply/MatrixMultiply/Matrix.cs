@@ -1,25 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
     class Matrix
     {
-        public int amountOfColumns { get; private set; }
-        public int amountOfRows { get; private set; }
-        public int[,] value { get; private set; }
+        public int AmountOfColumns { get; private set; }
+        public int AmountOfRows { get; private set; }
+        public int[,] Value { get; private set; }
 
         public Matrix(int[,] matrix)
         {
-            this.value = matrix;
-            this.amountOfColumns = matrix.GetLength(0);
-            this.amountOfRows = matrix.GetLength(1);
+            this.Value = matrix;
+            this.AmountOfColumns = matrix.GetLength(0);
+            this.AmountOfRows = matrix.GetLength(1);
         }
 
         public Matrix(int n, int m)
         {
+            if (n <= 0 || m <= 0)
+            {
+                throw new InvalidMatrixFormatException("Dimensions have to be natural");
+            }
+
             var matrix = new int[n, m];
             for (int i = 0; i < n; i++)
             {
@@ -29,13 +33,18 @@ namespace MatrixMultiply
                 }
             }
 
-            this.amountOfColumns = n;
-            this.amountOfRows = m;
-            this.value = matrix;
+            this.AmountOfColumns = n;
+            this.AmountOfRows = m;
+            this.Value = matrix;
         }
 
         public Matrix(int n, int m, int range)
         {
+            if (n <= 0 || m <= 0)
+            {
+                throw new InvalidMatrixFormatException("Dimensions have to be natural");
+            }
+
             var matrix = new int[n, m];
             var rand = new Random();
 
@@ -47,37 +56,37 @@ namespace MatrixMultiply
                 }
             }
 
-            this.amountOfColumns = n;
-            this.amountOfRows = m;
-            this.value = matrix;
+            this.AmountOfColumns = n;
+            this.AmountOfRows = m;
+            this.Value = matrix;
         }
 
-        public Matrix ParallelMultiply(Matrix matr)
+        public Matrix ParallelMultiply(Matrix matrix)
         {
-            if (this.amountOfRows != matr.amountOfColumns)
+            if (this.AmountOfRows != matrix.AmountOfColumns)
             {
-                throw new ArgumentException("Incorrect format of the matrix");
+                throw new InvalidMatrixFormatException("Incorrect matrix format!");
             }
 
             var threads = new Thread[Environment.ProcessorCount];
-            var chunkSize = this.amountOfColumns * matr.amountOfRows / threads.Length + 1;
-            var result = new Matrix(this.amountOfColumns, matr.amountOfRows);
+            var chunkSize = this.AmountOfColumns * matrix.AmountOfRows / threads.Length + 1;
+            var result = new Matrix(this.AmountOfColumns, matrix.AmountOfRows);
 
             for (var t = 0; t < threads.Length; t++)
             {
-                var currentI = chunkSize * t / result.amountOfRows;
-                var currentJ = chunkSize * t % result.amountOfRows;
+                var currentI = chunkSize * t / result.AmountOfRows;
+                var currentJ = chunkSize * t % result.AmountOfRows;
                 var count = 0;
 
                 threads[t] = new Thread(() =>
                 {
-                    for (var i = currentI; i < result.amountOfColumns && count < chunkSize; i++)
+                    for (var i = currentI; i < result.AmountOfColumns && count < chunkSize; i++)
                     {
-                        for (var j = currentJ; j < result.amountOfRows && count < chunkSize; j++)
+                        for (var j = currentJ; j < result.AmountOfRows && count < chunkSize; j++)
                         {
-                            for (var k = 0; k < this.amountOfRows; k++)
+                            for (var k = 0; k < this.AmountOfRows; k++)
                             {
-                                result.value[i, j] += this.value[i, k] * matr.value[k, j];
+                                result.Value[i, j] += this.Value[i, k] * matrix.Value[k, j];
                             }
                             count++;
                         }
@@ -100,41 +109,39 @@ namespace MatrixMultiply
         }
 
 
-        public Matrix Multiply(Matrix matr)
+        public Matrix Multiply(Matrix matrix)
         {
-            //null  на массивы
-
-            if (this.amountOfRows != matr.amountOfColumns)
+            if (this.AmountOfRows != matrix.AmountOfColumns)
             {
-                throw new ArgumentException("Incorrect format of the matrix"); //посмотреть наследники
+                throw new InvalidMatrixFormatException("Incorrect matrix format!");
             }
 
-            var result = new Matrix(this.amountOfColumns, matr.amountOfRows);
+            var result = new Matrix(this.AmountOfColumns, matrix.AmountOfRows);
 
-            for (var i = 0; i < this.amountOfColumns; i++)
+            for (var i = 0; i < this.AmountOfColumns; i++)
             {
-                for (var j = 0; j < matr.amountOfRows; j++)
+                for (var j = 0; j < matrix.AmountOfRows; j++)
                 {
-                    for (var k = 0; k < this.amountOfRows; k++)
+                    for (var k = 0; k < this.AmountOfRows; k++)
                     {
-                        result.value[i, j] += this.value[i, k] * matr.value[k, j];
+                        result.Value[i, j] += this.Value[i, k] * matrix.Value[k, j];
                     }
                 }
             }
             return result;
         }
 
-        public bool IsEqual(Matrix matr)
+        public bool IsEqual(Matrix matrix)
         {
-            if (this.amountOfColumns != matr.amountOfColumns || this.amountOfRows != matr.amountOfRows)
+            if (this.AmountOfColumns != matrix.AmountOfColumns || this.AmountOfRows != matrix.AmountOfRows)
             {
                 return false;
             }
-            for (var i = 0; i < this.amountOfColumns; i++)
+            for (var i = 0; i < this.AmountOfColumns; i++)
             {
-                for (var j = 0;  j < this.amountOfRows; j++)
+                for (var j = 0;  j < this.AmountOfRows; j++)
                 {
-                    if (this.value[i, j] != matr.value[i, j])
+                    if (this.Value[i, j] != matrix.Value[i, j])
                     {
                         return false;
                     }

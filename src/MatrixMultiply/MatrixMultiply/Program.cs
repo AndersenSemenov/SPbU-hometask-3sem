@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
@@ -8,14 +10,33 @@ namespace MatrixMultiply
         {
             if (args.Length != 3)
             {
-                //
-            }
-            var matrix1 = new Matrix(FileOperations.ReadMatrix(args[0]));
-            var matrix2 = new Matrix(FileOperations.ReadMatrix(args[1]));
-            var result = matrix1.ParallelMultiply(matrix2);
-            FileOperations.WriteMatrix(args[2], result);
+                Console.WriteLine("Expected to have 3 arguments");
+                return;
+            }  
 
-            //Assert.throws
+            try
+            {
+                var matrix1 = new Matrix(FileOperations.ReadMatrix(args[0]));
+                var matrix2 = new Matrix(FileOperations.ReadMatrix(args[1]));
+                var result = matrix1.ParallelMultiply(matrix2);
+                FileOperations.WriteMatrix(args[2], result);
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (EmptyFileException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (InvalidMatrixFormatException e)
+            {
+                Console.WriteLine(e.Message);
+            } 
         }
     }
 }
