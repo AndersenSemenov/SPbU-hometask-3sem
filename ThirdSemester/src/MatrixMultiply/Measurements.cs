@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MatrixMultiply
 {
-    class Measurements
+    public class Measurements
     {
         //public static int GetMultiplicationTime(Func<Matrix> function)
         //{

@@ -7,7 +7,7 @@ using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
-    class FileOperations
+    public class FileOperations
     {
         public static int[,] ReadMatrix(string path)
         {

@@ -4,7 +4,7 @@ using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
-    class Matrix
+    public class Matrix
     {
         public int AmountOfColumns { get; private set; }
         public int AmountOfRows { get; private set; }
