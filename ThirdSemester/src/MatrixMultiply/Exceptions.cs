@@ -2,7 +2,7 @@
 
 namespace MatrixMultiply
 {
-    class Exceptions
+    public class Exceptions
     {
         public class EmptyFileException: Exception
         {
