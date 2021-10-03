@@ -30,28 +30,31 @@ namespace MatrixMultiply
         /// Counts average time of matrix multiply with different dimension
         /// </summary>
         /// <param name="func">Function to take measurements on</param>
-        /// <returns>long[,], where one row is a series of experiments with fixed matrix dimension</returns>
-        static public long[] TakeMeasurements(Func<Matrix, Matrix, Matrix> func)
+        static public void PrintMeasurements(Func<Matrix, Matrix, Matrix> func)
         {
-            var start = 10;
-            var step = 50;
-            var stop = 410;
-            var amountOfMeasurements = 10;
-            var arr = new long[(stop - start)/step + 1];
-            var range = 10000;
+            var start = 100;
+            var step = 100;
+            var stop = 1500;
+            var amountOfMeasurements = 20;
+            var range = 1000;
             for (var matrixDimension = start; matrixDimension <= stop; matrixDimension += step)
             {
-                long averageTime = 0;
+                long expectedValue = 0;
+                long variance = 0;
                 for (var counter = 0; counter < amountOfMeasurements; counter++)
                 {
                     var matrix1 = new Matrix(matrixDimension, matrixDimension, range);
                     var matrix2 = new Matrix(matrixDimension, matrixDimension, range);
-                    averageTime += GetTime(func, matrix1, matrix2);
+                    var time = GetTime(func, matrix1, matrix2);
+                    expectedValue += time;
+                    variance += time * time;
                 }
-                averageTime /= amountOfMeasurements;
-                arr[(matrixDimension - start) / step] = averageTime;
+                expectedValue /= amountOfMeasurements;
+                variance /= amountOfMeasurements;
+                variance -= expectedValue * expectedValue;
+                Console.WriteLine($"Measurements on {matrixDimension}x{matrixDimension} matrix:");
+                Console.WriteLine($"Average time: {(double)(expectedValue) / 1000} seconds, standart deviation: {Math.Round(Math.Sqrt(variance) / 1000, 5)} seconds\n");
             }
-            return arr;
         }
     }
 }
