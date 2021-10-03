@@ -5,8 +5,18 @@ using System.Text;
 
 namespace MatrixMultiply
 {
-    public class Measurements
+    /// <summary>
+    /// Class for taking measurements
+    /// </summary>
+    public static class Measurements
     {
+        /// <summary>
+        /// Gets elapsed time of function work
+        /// </summary>
+        /// <param name="function">Function to measure</param>
+        /// <param name="matrix1">First matrix to multiply</param>
+        /// <param name="matrix2">Second matrix to multiply</param>
+        /// <returns>Elapsed time while function was working</returns>
         public static long GetTime(Func<Matrix, Matrix, Matrix> function, Matrix matrix1, Matrix matrix2)
         {
             var watch = new Stopwatch();
@@ -16,9 +26,13 @@ namespace MatrixMultiply
             return watch.ElapsedMilliseconds;
         }
 
-        static public long[] hueta(Func<Matrix, Matrix, Matrix> func)
+        /// <summary>
+        /// Counts average time of matrix multiply with different dimension
+        /// </summary>
+        /// <param name="func">Function to take measurements on</param>
+        /// <returns>long[,], where one row is a series of experiments with fixed matrix dimension</returns>
+        static public long[] TakeMeasurements(Func<Matrix, Matrix, Matrix> func)
         {
-            
             var start = 10;
             var step = 50;
             var stop = 410;

@@ -8,7 +8,7 @@ namespace MatrixMultiply
     {
         static void Main(string[] args)
         {
-            var result = Measurements.hueta((matrix1, matrix2) => matrix1.ParallelMultiply(matrix2));
+            var result = Measurements.TakeMeasurements((matrix1, matrix2) => matrix1.ParallelMultiply(matrix2));
             foreach (var res in result)
             {
                 Console.WriteLine(res);

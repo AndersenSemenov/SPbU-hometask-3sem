@@ -4,12 +4,19 @@ using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
+    /// <summary>
+    /// Class for Matrix objects
+    /// </summary>
     public class Matrix
     {
         public int AmountOfColumns { get; private set; }
         public int AmountOfRows { get; private set; }
         public int[,] Value { get; private set; }
 
+        /// <summary>
+        /// Constructor by taken matrix
+        /// </summary>
+        /// <param name="matrix">Value of the matrix</param>
         public Matrix(int[,] matrix)
         {
             this.Value = matrix;
@@ -17,6 +24,11 @@ namespace MatrixMultiply
             this.AmountOfRows = matrix.GetLength(1);
         }
 
+        /// <summary>
+        /// Constructor for the matrix with all zeros
+        /// </summary>
+        /// <param name="n">First dimension</param>
+        /// <param name="m">Second dimension</param>
         public Matrix(int n, int m)
         {
             if (n <= 0 || m <= 0)
@@ -32,12 +44,17 @@ namespace MatrixMultiply
                     matrix[i, j] = 0;
                 }
             }
-
             this.AmountOfColumns = n;
             this.AmountOfRows = m;
             this.Value = matrix;
         }
 
+        /// <summary>
+        /// Constructor for the matrix with random values from range
+        /// </summary>
+        /// <param name="n">First dimension</param>
+        /// <param name="m">Second dimension</param>
+        /// <param name="range">Range for the values of matrix elements</param>
         public Matrix(int n, int m, int range)
         {
             if (n <= 0 || m <= 0)
@@ -47,7 +64,6 @@ namespace MatrixMultiply
 
             var matrix = new int[n, m];
             var rand = new Random();
-
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < m; j++)
@@ -55,12 +71,17 @@ namespace MatrixMultiply
                     matrix[i, j] = rand.Next(range);
                 }
             }
-
             this.AmountOfColumns = n;
             this.AmountOfRows = m;
             this.Value = matrix;
         }
 
+
+        /// <summary>
+        /// Parallel version of matrix multiply
+        /// </summary>
+        /// <param name="matrix">Matrix which needed to be multiplied on this</param>
+        /// <returns>The matrix result of parallel multiply</returns>
         public Matrix ParallelMultiply(Matrix matrix)
         {
             if (this.AmountOfRows != matrix.AmountOfColumns)
@@ -77,7 +98,6 @@ namespace MatrixMultiply
                 var currentI = chunkSize * t / result.AmountOfRows;
                 var currentJ = chunkSize * t % result.AmountOfRows;
                 var count = 0;
-
                 threads[t] = new Thread(() =>
                 {
                     for (var i = currentI; i < result.AmountOfColumns && count < chunkSize; i++)
@@ -108,7 +128,11 @@ namespace MatrixMultiply
             return result;
         }
 
-
+        /// <summary>
+        /// Sequence, usual version of matrix multiply
+        /// </summary>
+        /// <param name="matrix">Matrix which needed to be multiplied on this</param>
+        /// <returns>The matrix result of usual multiply</returns>
         public Matrix Multiply(Matrix matrix)
         {
             if (this.AmountOfRows != matrix.AmountOfColumns)
@@ -131,6 +155,11 @@ namespace MatrixMultiply
             return result;
         }
 
+        /// <summary>
+        /// Method to compare whether this matrix and input matrix are equal
+        /// </summary>
+        /// <param name="matrix">Matrix to compare with</param>
+        /// <returns>True if matrices are equal else returns false</returns>
         public bool IsEqual(Matrix matrix)
         {
             if (this.AmountOfColumns != matrix.AmountOfColumns || this.AmountOfRows != matrix.AmountOfRows)

@@ -7,8 +7,16 @@ using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
-    public class FileOperations
+    /// <summary>
+    /// Static class for filework with matrix 
+    /// </summary>
+    public static class FileOperations
     {
+        /// <summary>
+        /// Reads matrix from the file
+        /// </summary>
+        /// <param name="path">Value from what path file should be read</param>
+        /// <returns>Two-dimensional array</returns>
         public static int[,] ReadMatrix(string path)
         {
 
@@ -27,7 +35,6 @@ namespace MatrixMultiply
                 {
                     throw new InvalidMatrixFormatException("Lengths of rows have to be equal");
                 }
-
                 for (var j = 0; j < matrix.GetLength(1); j++)
                 {
                     matrix[i, j] = Convert.ToInt32(splitted[i][j]);
@@ -37,6 +44,11 @@ namespace MatrixMultiply
             return matrix;
         }
 
+        /// <summary>
+        /// Writes matrix to the file
+        /// </summary>
+        /// <param name="path">Value where matrix should be written</param>
+        /// <param name="matrix">Value to put into a file</param>
         public static void WriteMatrix(string path, Matrix matrix)
         {
             using (var writer = new StreamWriter(path))
