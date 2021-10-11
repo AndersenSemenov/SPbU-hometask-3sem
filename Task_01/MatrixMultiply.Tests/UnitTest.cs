@@ -39,20 +39,20 @@ namespace MatrixMultiply.Tests
             Assert.Throws<InvalidMatrixFormatException>(() => new Matrix(n, m, range));
         }
 
-        [TestCase("..//..//..//..//..//data/MatrixMultiply/first.txt")]
+        [TestCase("..//..//..//..//data/MatrixMultiply/first.txt")]
         public void CatchEmptyFileException(string path)
         {
             Assert.Throws<EmptyFileException>(() => FileOperations.ReadMatrix(path));
         }
 
-        [TestCase("..//..//..//..//..//data/MatrixMultiply/second.txt")]
+        [TestCase("..//..//..//..//data/MatrixMultiply/second.txt")]
         public void CatchFormatException(string path)
         {
             Assert.Throws<FormatException>(() => FileOperations.ReadMatrix(path));
         }
 
-        [TestCase("..//..//..//..//..//data/MatrixMultiply/third.txt")]
-        [TestCase("..//..//..//..//..//data/MatrixMultiply/fourth.txt")]
+        [TestCase("..//..//..//..//data/MatrixMultiply/third.txt")]
+        [TestCase("..//..//..//..//data/MatrixMultiply/fourth.txt")]
         public void CatchNotEqualColumnsRowsException(string path)
         {
             Assert.Throws<InvalidMatrixFormatException>(() => FileOperations.ReadMatrix(path));
