@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
@@ -37,13 +36,6 @@ namespace MatrixMultiply
             }
 
             var matrix = new int[n, m];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < m; j++)
-                {
-                    matrix[i, j] = 0;
-                }
-            }
             this.AmountOfColumns = n;
             this.AmountOfRows = m;
             this.Value = matrix;
@@ -75,7 +67,6 @@ namespace MatrixMultiply
             this.AmountOfRows = m;
             this.Value = matrix;
         }
-
 
         /// <summary>
         /// Parallel version of matrix multiply

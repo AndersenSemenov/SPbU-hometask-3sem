@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
-using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply
 {
@@ -19,7 +18,6 @@ namespace MatrixMultiply
         /// <returns>Two-dimensional array</returns>
         public static int[,] ReadMatrix(string path)
         {
-
             var fileStrings = File.ReadAllLines(path);
 
             if (fileStrings.Length == 0)
@@ -51,17 +49,15 @@ namespace MatrixMultiply
         /// <param name="matrix">Value to put into a file</param>
         public static void WriteMatrix(string path, Matrix matrix)
         {
-            using (var writer = new StreamWriter(path))
+            using var writer = new StreamWriter(path);
+            for (var i = 0; i < matrix.AmountOfColumns; i++)
             {
-                for (var i = 0; i < matrix.AmountOfColumns; i++)
+                var str = "";
+                for (var j = 0; j < matrix.AmountOfRows; j++)
                 {
-                    var str = "";
-                    for (var j = 0; j < matrix.AmountOfRows; j++)
-                    {
-                        str += $"{matrix.Value[i, j]} ";
-                    }
-                    writer.WriteLine(str);
+                    str += $"{matrix.Value[i, j]} ";
                 }
+                writer.WriteLine(str);
             }
         }
     }

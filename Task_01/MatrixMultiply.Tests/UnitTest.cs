@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using System;
 using System.IO;
-using static MatrixMultiply.Exceptions;
 
 namespace MatrixMultiply.Tests
 {
@@ -39,20 +38,20 @@ namespace MatrixMultiply.Tests
             Assert.Throws<InvalidMatrixFormatException>(() => new Matrix(n, m, range));
         }
 
-        [TestCase("..//..//..//..//data/MatrixMultiply/first.txt")]
+        [TestCase("..//..//..//..//data/first.txt")]
         public void CatchEmptyFileException(string path)
         {
             Assert.Throws<EmptyFileException>(() => FileOperations.ReadMatrix(path));
         }
 
-        [TestCase("..//..//..//..//data/MatrixMultiply/second.txt")]
+        [TestCase("..//..//..//..//data/second.txt")]
         public void CatchFormatException(string path)
         {
             Assert.Throws<FormatException>(() => FileOperations.ReadMatrix(path));
         }
 
-        [TestCase("..//..//..//..//data/MatrixMultiply/third.txt")]
-        [TestCase("..//..//..//..//data/MatrixMultiply/fourth.txt")]
+        [TestCase("..//..//..//..//data/third.txt")]
+        [TestCase("..//..//..//..//data/fourth.txt")]
         public void CatchNotEqualColumnsRowsException(string path)
         {
             Assert.Throws<InvalidMatrixFormatException>(() => FileOperations.ReadMatrix(path));

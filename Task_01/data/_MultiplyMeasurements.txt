@@ -1,0 +1,59 @@
+Measurements on 100x100 matrix:
+Sequence: Average time: 0,025 seconds, standart deviation: 0,00624 seconds
+Parallel: Average time: 0,082 seconds, standart deviation: 0,01738 seconds
+
+Measurements on 200x200 matrix:
+Sequence: Average time: 0,183 seconds, standart deviation: 0,0355 seconds
+Parallel: Average time: 0,12 seconds, standart deviation: 0,01903 seconds
+
+Measurements on 300x300 matrix:
+Sequence: Average time: 0,553 seconds, standart deviation: 0,02254 seconds
+Parallel: Average time: 0,241 seconds, standart deviation: 0,0249 seconds
+
+Measurements on 400x400 matrix:
+Sequence: Average time: 1,337 seconds, standart deviation: 0,04663 seconds
+Parallel: Average time: 0,498 seconds, standart deviation: 0,02015 seconds
+
+Measurements on 500x500 matrix:
+Sequence: Average time: 2,596 seconds, standart deviation: 0,07327 seconds
+Parallel: Average time: 0,886 seconds, standart deviation: 0,03982 seconds
+
+Measurements on 600x600 matrix:
+Sequence: Average time: 4,512 seconds, standart deviation: 0,07328 seconds
+Parallel: Average time: 1,441 seconds, standart deviation: 0,04805 seconds
+
+Measurements on 700x700 matrix:
+Sequence: Average time: 7,781 seconds, standart deviation: 0,56916 seconds
+Parallel: Average time: 2,22 seconds, standart deviation: 0,01493 seconds
+
+Measurements on 800x800 matrix:
+Sequence: Average time: 11,898 seconds, standart deviation: 0,11625 seconds
+Parallel: Average time: 3,323 seconds, standart deviation: 0,09435 seconds
+
+Measurements on 900x900 matrix:
+Sequence: Average time: 17,793 seconds, standart deviation: 0,19761 seconds
+Parallel: Average time: 4,886 seconds, standart deviation: 0,09231 seconds
+
+Measurements on 1000x1000 matrix:
+Sequence: Average time: 24,453 seconds, standart deviation: 0,29863 seconds
+Parallel: Average time: 6,794 seconds, standart deviation: 0,09962 seconds
+
+Measurements on 1100x1100 matrix:
+Sequence: Average time: 32,599 seconds, standart deviation: 0,28324 seconds
+Parallel: Average time: 9,177 seconds, standart deviation: 0,12629 seconds
+
+Measurements on 1200x1200 matrix:
+Sequence: Average time: 41,719 seconds, standart deviation: 0,35208 seconds
+Parallel: Average time: 11,997 seconds, standart deviation: 0,13121 seconds
+
+Measurements on 1300x1300 matrix:
+Sequence: Average time: 54,435 seconds, standart deviation: 0,32495 seconds
+Parallel: Average time: 15,387 seconds, standart deviation: 0,16006 seconds
+
+Measurements on 1400x1400 matrix:
+Sequence: Average time: 67,505 seconds, standart deviation: 0,34518 seconds
+Parallel: Average time: 19,452 seconds, standart deviation: 0,22117 seconds
+
+Measurements on 1500x1500 matrix:
+Sequence: Average time: 84,806 seconds, standart deviation: 1,65067 seconds
+Parallel: Average time: 24,294 seconds, standart deviation: 0,25349 seconds
