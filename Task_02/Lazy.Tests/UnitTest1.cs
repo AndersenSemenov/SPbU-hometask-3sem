@@ -1,19 +1,16 @@
 using NUnit.Framework;
 using Lazy;
+using System;
 
 namespace Lazy.Tests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
-        public void Test1()
+        public void SupplierCantBeNull()
         {
-            Assert.Pass();
+            Assert.Throws<ArgumentNullException>(() => LazyFactory.CreateOneThreadLazy<object>(null));
+            Assert.Throws<ArgumentNullException>(() => LazyFactory.CreateMultiThreadLazy<object>(null));
         }
     }
 }
