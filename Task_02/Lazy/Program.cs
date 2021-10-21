@@ -6,7 +6,8 @@ namespace Lazy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var lazy = LazyFactory.CreateMultiThreadLazy<int>(() => 2 * 3);
+            Console.WriteLine(lazy.Get());
         }
     }
 }

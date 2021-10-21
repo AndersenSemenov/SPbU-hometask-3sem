@@ -6,8 +6,8 @@ namespace Lazy
 {
     public class OneThreadLazy<T>: ILazy<T>
     {
-        public T value { get; private set; }
-        private bool IsCalculated = false;
+        public T Value { get; private set; }
+        private bool isCalculated = false;
         private Func<T> supplier;
 
         public OneThreadLazy(Func<T> supplier)
@@ -15,14 +15,13 @@ namespace Lazy
 
         public T Get()
         {
-            if (!IsCalculated)
+            if (!isCalculated)
             {
-                IsCalculated = true;
-                value = supplier();
+                Value = supplier();
+                isCalculated = true;
                 supplier = null;
             }
-            
-            return value;
+            return Value;
         }
     }
 }
